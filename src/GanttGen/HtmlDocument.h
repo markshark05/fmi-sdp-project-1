@@ -9,9 +9,9 @@ class HtmlDocument : public HtmlNode
 {
 private:
     std::vector<HtmlNode*> ownedNodes;
-    HtmlElementNode* documentElement;
-    HtmlElementNode* head;
-    HtmlElementNode* body;
+    HtmlElementNode* const documentElement;
+    HtmlElementNode* const head;
+    HtmlElementNode* const body;
 public:
     HtmlDocument();
     HtmlDocument(const HtmlDocument&) = delete;

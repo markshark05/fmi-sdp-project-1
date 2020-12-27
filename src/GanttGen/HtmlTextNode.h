@@ -4,7 +4,7 @@
 class HtmlTextNode : public HtmlNode
 {
 private:
-    std::string value;
+    const std::string value;
 public:
     HtmlTextNode(std::string value);
 

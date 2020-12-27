@@ -2,9 +2,9 @@
 #include <string>
 class GanttTask
 {
-    std::string name;
-    int startOffset;
-    int length;
+    const std::string name;
+    const int startOffset;
+    const int length;
 public:
     GanttTask(std::string name, int startOffset, int length);
     std::string getName() const;

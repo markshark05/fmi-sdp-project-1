@@ -7,7 +7,7 @@
 class HtmlElementNode : public HtmlNode
 {
 private:
-    std::string tagName;
+    const std::string tagName;
     std::unordered_map<std::string, std::string> attributes;
     std::vector<HtmlNode*> children;
 public:

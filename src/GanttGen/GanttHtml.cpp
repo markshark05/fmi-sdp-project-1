@@ -8,7 +8,7 @@
 #include "HtmlElementNode.h"
 #include "HtmlTextNode.h"
 
-GanttHtml::GanttHtml(std::vector<GanttTask>& tasks) :
+GanttHtml::GanttHtml(const std::vector<GanttTask>& tasks) :
     tasks(tasks),
     taskCols(calculate_taskCols(tasks))
 {
@@ -16,7 +16,9 @@ GanttHtml::GanttHtml(std::vector<GanttTask>& tasks) :
 
 void GanttHtml::generate(std::ostream& out)
 {
-    HtmlElementNode* style = generate_style();
+    HtmlDocument document;
+
+    HtmlElementNode* style = generate_style(document);
     document.getHead()->appendChild(style);
 
     HtmlElementNode* table = document.createElement("table");
@@ -24,10 +26,10 @@ void GanttHtml::generate(std::ostream& out)
     table->setAttr("cellspacing", "0");
     table->setAttr("cellpadding", "0");
 
-    HtmlElementNode* thead = generate_thead();
+    HtmlElementNode* thead = generate_thead(document);
     table->appendChild(thead);
 
-    HtmlElementNode* tbody = generate_tbody();
+    HtmlElementNode* tbody = generate_tbody(document);
     table->appendChild(tbody);
 
     document.getBody()->appendChild(table);
@@ -35,7 +37,7 @@ void GanttHtml::generate(std::ostream& out)
     out << document;
 }
 
-int GanttHtml::calculate_taskCols(std::vector<GanttTask>& tasks)
+int GanttHtml::calculate_taskCols(const std::vector<GanttTask>& tasks)
 {
     int taskCols = 0;
     for (GanttTask const& task : tasks)
@@ -46,7 +48,7 @@ int GanttHtml::calculate_taskCols(std::vector<GanttTask>& tasks)
     return taskCols;
 }
 
-HtmlElementNode* GanttHtml::generate_style()
+HtmlElementNode* GanttHtml::generate_style(HtmlDocument& document)
 {
     HtmlTextNode* styleText = document.createTextNode
     (
@@ -61,7 +63,7 @@ HtmlElementNode* GanttHtml::generate_style()
     return style;
 }
 
-HtmlElementNode* GanttHtml::generate_thead()
+HtmlElementNode* GanttHtml::generate_thead(HtmlDocument& document)
 {
     HtmlElementNode* thead = document.createElement("thead");
     HtmlElementNode* tr = document.createElement("tr");
@@ -79,7 +81,7 @@ HtmlElementNode* GanttHtml::generate_thead()
     return thead;
 }
 
-HtmlElementNode* GanttHtml::generate_tbody()
+HtmlElementNode* GanttHtml::generate_tbody(HtmlDocument& document)
 {
     HtmlElementNode* tbody = document.createElement("tbody");
     for (GanttTask const& task : tasks)

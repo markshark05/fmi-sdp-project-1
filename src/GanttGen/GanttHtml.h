@@ -9,16 +9,14 @@
 class GanttHtml
 {
 private:
-    std::vector<GanttTask>& tasks;
-
-    HtmlDocument document;
-    int taskCols;
+    const std::vector<GanttTask>& tasks;
+    const int taskCols;
 public:
-    GanttHtml(std::vector<GanttTask>& tasks);
+    GanttHtml(const std::vector<GanttTask>& tasks);
     void generate(std::ostream& out);
 private:
-    static int calculate_taskCols(std::vector<GanttTask>& tasks);
-    HtmlElementNode* generate_style();
-    HtmlElementNode* generate_thead();
-    HtmlElementNode* generate_tbody();
+    static int calculate_taskCols(const std::vector<GanttTask>& tasks);
+    HtmlElementNode* generate_style(HtmlDocument& document);
+    HtmlElementNode* generate_thead(HtmlDocument& document);
+    HtmlElementNode* generate_tbody(HtmlDocument& document);
 };
