@@ -1,27 +1,22 @@
 #pragma once
 #include <vector>
 
-#include "HtmlNode.h"
-#include "HtmlElementNode.h"
-#include "HtmlTextNode.h"
+#include "XmlDocument.h"
+#include "XmlNode.h"
+#include "XmlElementNode.h"
+#include "XmlTextNode.h"
 
-class HtmlDocument : public HtmlNode
+class HtmlDocument : public XmlDocument
 {
 private:
-    std::vector<HtmlNode*> ownedNodes;
-    HtmlElementNode* const documentElement;
-    HtmlElementNode* const head;
-    HtmlElementNode* const body;
+    std::vector<XmlNode*> ownedNodes;
+    XmlElementNode* const head;
+    XmlElementNode* const body;
 public:
     HtmlDocument();
-    HtmlDocument(const HtmlDocument&) = delete;
-    ~HtmlDocument();
 
-    HtmlElementNode* createElement(std::string tagName);
-    HtmlTextNode* createTextNode(std::string value);
-    
-    HtmlElementNode* getHead() const;
-    HtmlElementNode* getBody() const;
+    XmlElementNode* getHead() const;
+    XmlElementNode* getBody() const;
 
     virtual void write(std::ostream& os) const override;
 };

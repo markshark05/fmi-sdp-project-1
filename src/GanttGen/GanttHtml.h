@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "HtmlDocument.h"
-#include "HtmlElementNode.h"
+#include "XmlElementNode.h"
 #include "GanttTask.h"
 
 class GanttHtml
@@ -16,7 +16,7 @@ public:
     void generate(std::ostream& out);
 private:
     static int calculate_taskCols(const std::vector<GanttTask>& tasks);
-    HtmlElementNode* generate_style(HtmlDocument& document);
-    HtmlElementNode* generate_thead(HtmlDocument& document);
-    HtmlElementNode* generate_tbody(HtmlDocument& document);
+    XmlElementNode* generate_style(HtmlDocument& document);
+    XmlElementNode* generate_thead(HtmlDocument& document);
+    XmlElementNode* generate_tbody(HtmlDocument& document);
 };

@@ -2,18 +2,22 @@
 #include <string>
 #include <unordered_map>
 
-#include "HtmlNode.h"
+#include "XmlNode.h"
 
-class HtmlElementNode : public HtmlNode
+class XmlElementNode : public XmlNode
 {
 private:
     const std::string tagName;
     std::unordered_map<std::string, std::string> attributes;
-    std::vector<HtmlNode*> children;
+    std::vector<XmlNode*> children;
 public:
-    HtmlElementNode(std::string tagName);
+    XmlElementNode(std::string tagName);
+
+    std::string getAttr(std::string attrName);
     void setAttr(std::string attrName, std::string attrVal);
-    void appendChild(HtmlNode* el);
+
+    std::vector<XmlNode*> getChildren() const;
+    void appendChild(XmlNode* el);
 
     virtual void write(std::ostream& os) const override;
 };

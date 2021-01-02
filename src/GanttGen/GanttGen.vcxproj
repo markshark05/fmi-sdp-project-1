@@ -139,21 +139,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application.cpp" />
     <ClCompile Include="GanttHtml.cpp" />
     <ClCompile Include="HtmlDocument.cpp" />
-    <ClCompile Include="HtmlNode.cpp" />
-    <ClCompile Include="HtmlTextNode.cpp" />
+    <ClCompile Include="XmlNode.cpp" />
+    <ClCompile Include="XmlParserDocument.cpp" />
+    <ClCompile Include="XmlTextNode.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="HtmlElementNode.cpp" />
+    <ClCompile Include="XmlElementNode.cpp" />
     <ClCompile Include="GanttTask.cpp" />
+    <ClCompile Include="XmlDocument.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application.h" />
     <ClInclude Include="GanttHtml.h" />
     <ClInclude Include="HtmlDocument.h" />
-    <ClInclude Include="HtmlElementNode.h" />
-    <ClInclude Include="HtmlNode.h" />
-    <ClInclude Include="HtmlTextNode.h" />
+    <ClInclude Include="XmlElementNode.h" />
+    <ClInclude Include="XmlNode.h" />
+    <ClInclude Include="XmlParserDocument.h" />
+    <ClInclude Include="XmlTextNode.h" />
     <ClInclude Include="GanttTask.h" />
+    <ClInclude Include="XmlDocument.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

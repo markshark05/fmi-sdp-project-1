@@ -1,12 +1,12 @@
 #pragma once
-#include "HtmlNode.h"
+#include "XmlNode.h"
 
-class HtmlTextNode : public HtmlNode
+class XmlTextNode : public XmlNode
 {
 private:
     const std::string value;
 public:
-    HtmlTextNode(std::string value);
+    XmlTextNode(std::string value);
 
     virtual void write(std::ostream& os) const override;
 };
