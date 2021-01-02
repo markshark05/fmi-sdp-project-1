@@ -36,3 +36,8 @@ void XmlDocument::write(std::ostream& os) const
 {
     os << *rootNode;
 }
+
+std::string XmlDocument::getName() const
+{
+    return "#document";
+}

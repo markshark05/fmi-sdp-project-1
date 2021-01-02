@@ -5,11 +5,11 @@ XmlElementNode::XmlElementNode(std::string tagName) :
 {
 }
 
-std::string XmlElementNode::getAttr(std::string attrName)
+std::string XmlElementNode::getAttr(std::string attrName) const
 {
     if (attributes.count(attrName) > 0)
     {
-        return attributes[attrName];
+        return attributes.at(attrName);
     }
     return std::string{};
 }
@@ -47,4 +47,9 @@ void XmlElementNode::write(std::ostream& os) const
 
     // closing tag
     os << "</" << tagName << ">";
+}
+
+std::string XmlElementNode::getName() const
+{
+    return tagName;
 }

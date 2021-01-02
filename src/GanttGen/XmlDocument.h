@@ -20,5 +20,6 @@ public:
     XmlElementNode* createElement(std::string tagName);
     XmlTextNode* createTextNode(std::string value);
 
+    virtual std::string getName() const override;
     virtual void write(std::ostream& os) const override;
 };

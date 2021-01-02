@@ -13,11 +13,12 @@ private:
 public:
     XmlElementNode(std::string tagName);
 
-    std::string getAttr(std::string attrName);
+    virtual std::string getAttr(std::string attrName) const override;
     void setAttr(std::string attrName, std::string attrVal);
 
-    std::vector<XmlNode*> getChildren() const;
+    virtual std::vector<XmlNode*> getChildren() const override;
     void appendChild(XmlNode* el);
 
+    virtual std::string getName() const override;
     virtual void write(std::ostream& os) const override;
 };

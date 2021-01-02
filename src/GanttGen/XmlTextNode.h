@@ -8,5 +8,6 @@ private:
 public:
     XmlTextNode(std::string value);
 
+    virtual std::string getName() const override;
     virtual void write(std::ostream& os) const override;
 };
