@@ -9,7 +9,7 @@
 #include "XmlTextNode.h"
 #include "GanttHtml.h"
 #include "XmlParserDocument.h"
-#include "TaskParser.h"
+#include "Project.h"
 
 void Application::run(std::istream& in, std::ostream& out)
 {
@@ -23,8 +23,7 @@ void Application::run(std::istream& in, std::ostream& out)
     std::ifstream fi{ "project.xml" };
     XmlParserDocument doc{ fi };
 
-    TaskParser taskParser;
-    taskParser.parse(doc);
+    Project proj{ doc };
 
     GanttHtml generator{ tasks };
     std::ofstream f{ "example.html", std::ios::out | std::ios::trunc };

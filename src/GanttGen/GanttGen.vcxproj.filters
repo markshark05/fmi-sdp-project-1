@@ -45,7 +45,10 @@
     <ClCompile Include="XmlParserDocument.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TaskParser.cpp">
+    <ClCompile Include="Task.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Project.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,7 +80,10 @@
     <ClInclude Include="XmlParserDocument.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TaskParser.h">
+    <ClInclude Include="Task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Project.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -142,7 +142,8 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="GanttHtml.cpp" />
     <ClCompile Include="HtmlDocument.cpp" />
-    <ClCompile Include="TaskParser.cpp" />
+    <ClCompile Include="Task.cpp" />
+    <ClCompile Include="Project.cpp" />
     <ClCompile Include="XmlNode.cpp" />
     <ClCompile Include="XmlParserDocument.cpp" />
     <ClCompile Include="XmlTextNode.cpp" />
@@ -155,7 +156,8 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="GanttHtml.h" />
     <ClInclude Include="HtmlDocument.h" />
-    <ClInclude Include="TaskParser.h" />
+    <ClInclude Include="Task.h" />
+    <ClInclude Include="Project.h" />
     <ClInclude Include="XmlElementNode.h" />
     <ClInclude Include="XmlNode.h" />
     <ClInclude Include="XmlParserDocument.h" />
