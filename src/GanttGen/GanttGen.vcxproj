@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="GanttCore.cpp" />
     <ClCompile Include="GanttHtml.cpp" />
     <ClCompile Include="HtmlDocument.cpp" />
     <ClCompile Include="Task.cpp" />
@@ -154,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="GanttCore.h" />
     <ClInclude Include="GanttHtml.h" />
     <ClInclude Include="HtmlDocument.h" />
     <ClInclude Include="Task.h" />

@@ -28,6 +28,7 @@ private:
 
 public:
     Project(const XmlDocument& document);
+    Project(const Project&) = delete;
     ~Project();
 private:
     Project(const RawProject& proj);
