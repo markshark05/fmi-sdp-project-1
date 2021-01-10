@@ -51,7 +51,7 @@ Project::RawProject Project::parseRawProject(const XmlDocument& document)
     }
     if (!projectNode)
     {
-        throw std::exception("project parser: project node not present");
+        throw std::runtime_error("project parser: project node not present");
     }
 
     project.max_resource = std::stof(projectNode->getAttr("max-resource"));
@@ -63,21 +63,21 @@ Project::RawProject Project::parseRawProject(const XmlDocument& document)
     {
         if (taskNode->getName() != "task")
         {
-            throw std::exception("project parser: unexpected node in project node");
+            throw std::runtime_error("project parser: unexpected node in project node");
         }
 
         RawTask task;
         task.name = taskNode->getAttr("name");
         if (task.name.empty())
         {
-            throw std::exception("project parser: task name cannot be empty");
+            throw std::runtime_error("project parser: task name cannot be empty");
         }
 
         for (RawTask& existingTask : tasks)
         {
             if (existingTask.name == task.name)
             {
-                throw std::exception("project parser: task name must be uniqe");
+                throw std::runtime_error("project parser: task name must be uniqe");
             }
         }
 
@@ -96,14 +96,14 @@ Project::RawProject Project::parseRawProject(const XmlDocument& document)
         std::string duration{ taskNode->getAttr("duration") };
         if (duration.empty())
         {
-            throw std::exception("project parser: duration cannot be empty");
+            throw std::runtime_error("project parser: duration cannot be empty");
         }
         task.duration = std::stoi(duration);
 
         std::string resources{ taskNode->getAttr("resources") };
         if (duration.empty())
         {
-            throw std::exception("project parser: resources cannot be empty");
+            throw std::runtime_error("project parser: resources cannot be empty");
         }
         task.resources = std::stof(resources);
 
@@ -111,13 +111,13 @@ Project::RawProject Project::parseRawProject(const XmlDocument& document)
         {
             if (subTaskNode->getName() != "sub-task")
             {
-                throw std::exception("project parser: unexpected subtask");
+                throw std::runtime_error("project parser: unexpected subtask");
             }
 
             std::string subtaskName{ subTaskNode->getAttr("name") };
             if (subtaskName.empty())
             {
-                throw std::exception("project parser: subtask name cannot be empty");
+                throw std::runtime_error("project parser: subtask name cannot be empty");
             }
 
             std::string subtaskType{ subTaskNode->getAttr("type") };
@@ -135,7 +135,7 @@ Project::RawProject Project::parseRawProject(const XmlDocument& document)
             }
             else
             {
-                throw std::exception("project parser: unexpected subtask type");
+                throw std::runtime_error("project parser: unexpected subtask type");
             }
         }
 
@@ -157,7 +157,7 @@ void updateSubTasks(
     {
         if (name == rawTaskName)
         {
-            throw std::exception("project parser: task cannot refer to itself");
+            throw std::runtime_error("project parser: task cannot refer to itself");
         }
 
         Task* found = nullptr;
@@ -170,7 +170,7 @@ void updateSubTasks(
         }
         if (!found)
         {
-            throw std::exception("project parser: task cannot refer to undefined task");
+            throw std::runtime_error("project parser: task cannot refer to undefined task");
         }
 
         outputSubTasks.insert(found);

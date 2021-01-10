@@ -38,13 +38,13 @@ void GanttCore::validate_proj_resource(Project& proj)
         total_res += task->resources;
         if (task->resources > proj.max_peak_resource)
         {
-            throw std::exception(std::string("GanttCore: task " + task->name + " exceeds peak resource").c_str());
+            throw std::runtime_error("GanttCore: task " + task->name + " exceeds peak resource");
         }
     }
 
     if (total_res > proj.max_resource)
     {
-        throw std::exception("GanttCore: total task resource exceeds project limit");
+        throw std::runtime_error("GanttCore: total task resource exceeds project limit");
     }
 }
 
@@ -87,7 +87,7 @@ std::unordered_map<Task*, int> GanttCore::process(Project& proj, OPT opt)
             });
 
         if (prev_satisfied.empty() && running.empty())
-            throw std::exception("GanttCore: No task can be started due to dependency cycle, day:" + day);
+            throw std::runtime_error("GanttCore: No task can be started due to dependency cycle, day:" + day);
 
         std::unordered_set<Task*> time_satisfied = filter(prev_satisfied,
             [&](Task* t)
@@ -133,7 +133,7 @@ std::unordered_map<Task*, int> GanttCore::process(Project& proj, OPT opt)
                     task_start_map.insert_or_assign(task, day);
                 }
             }
-            else throw std::exception("GanttCore: Unsupported otion");
+            else throw std::runtime_error("GanttCore: Unsupported otion");
         }
 
         for (auto it = running.begin(); it != running.end();)

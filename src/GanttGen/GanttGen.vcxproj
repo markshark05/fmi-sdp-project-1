@@ -140,6 +140,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="CLILoop.cpp" />
+    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="CommandExit.cpp" />
+    <ClCompile Include="CommandGenerate.cpp" />
+    <ClCompile Include="CommandHelp.cpp" />
     <ClCompile Include="GanttCore.cpp" />
     <ClCompile Include="GanttHtml.cpp" />
     <ClCompile Include="HtmlDocument.cpp" />
@@ -155,9 +160,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="CLILoop.h" />
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="CommandExit.h" />
+    <ClInclude Include="CommandGenerate.h" />
+    <ClInclude Include="CommandHelp.h" />
     <ClInclude Include="GanttCore.h" />
     <ClInclude Include="GanttHtml.h" />
     <ClInclude Include="HtmlDocument.h" />
+    <ClInclude Include="ICommandsLoop.h" />
+    <ClInclude Include="IStoppableLoop.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="Project.h" />
     <ClInclude Include="XmlElementNode.h" />
