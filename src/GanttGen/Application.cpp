@@ -9,21 +9,12 @@
 
 void Application::run(std::istream& in, std::ostream& out)
 {
-    std::vector<GanttTask> tasks
-    {
-        GanttTask {"Task One",   1, 2},
-        GanttTask {"Task Two",   2, 3},
-        GanttTask {"Task Three", 5, 3},
-    };
-
-    std::ifstream fi{ "project.xml" };
+    std::ifstream fi{ "project1.xml" };
     XmlParserDocument doc{ fi };
 
     Project proj{ doc };
-
-    GanttCore core;
-
+    std::vector<GanttTask> tasks = GanttCore::createTasks(proj, GanttCore::OPT::MIN_PEAK_RES);
     GanttHtml htmlGenerator{ tasks };
-    std::ofstream f{ "example.html", std::ios::out | std::ios::trunc };
+    std::ofstream f{ "chart1.html", std::ios::out | std::ios::trunc };
     htmlGenerator.generate(f);
 }
