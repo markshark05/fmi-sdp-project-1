@@ -15,7 +15,7 @@ private:
     std::string helpMessage;
 public:
     /**
-     * @brief Construct a new Command object
+     * @brief Construct a Command object
      * 
      * @param name the name for the command used in the CLI
      * @param minArgsCount the minimum number of arguments required to execute the command

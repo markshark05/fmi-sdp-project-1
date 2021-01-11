@@ -360,3 +360,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# End of https://www.gitignore.io/api/c++,visualstudio
+
+# Doxygen generated documentation
+docs/html/

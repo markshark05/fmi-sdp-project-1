@@ -2,6 +2,10 @@
 #include "XmlDocument.h"
 #include "Task.h"
 
+/**
+ * @brief Represents a Project containing tasks
+ * 
+ */
 class Project
 {
 private:
@@ -27,14 +31,28 @@ private:
     };
 
 public:
+    /**
+     * @brief Construct a Project object from the source XMLDocument
+     * 
+     * @param document the source document
+     */
     Project(const XmlDocument& document);
     Project(const Project&) = delete;
     ~Project();
 private:
     Project(const RawProject& proj);
 public:
+    /**
+     * @brief the project tasks with valid references to other tasks
+     */
     const std::vector<Task*> tasks;
+    /**
+     * @brief the maximum total resource for the project
+     */
     const float max_resource;
+    /**
+     * @brief the maximum peak reasource at any given day for the project
+     */
     const float max_peak_resource;
 private:
     static RawProject parseRawProject(const XmlDocument& document);

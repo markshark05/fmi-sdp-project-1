@@ -13,7 +13,7 @@ private:
     IStoppableLoop* _loop;
 public:
     /**
-     * @brief Construct a new CommandExit object
+     * @brief Construct a CommandExit object
      * 
      * @param loop a reference to the loop to stop
      */

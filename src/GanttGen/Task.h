@@ -2,8 +2,15 @@
 #include <string>
 #include <unordered_set>
 
+/**
+ * @brief a POD object representing the task
+ */
 struct Task
 {
+    /**
+     * @brief Construct a Task object
+     * 
+     */
     Task();
     std::string name;
     int min_start_day;

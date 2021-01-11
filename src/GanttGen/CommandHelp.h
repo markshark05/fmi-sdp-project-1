@@ -13,7 +13,7 @@ private:
     const ICommandsLoop* _loop;
 public:
     /**
-     * @brief Construct a new CommandHelp object
+     * @brief Construct a CommandHelp object
      * 
      * @param commandLoop the loop containing the commands
      */

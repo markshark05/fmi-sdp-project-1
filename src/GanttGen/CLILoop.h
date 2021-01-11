@@ -20,7 +20,7 @@ private:
     bool running;
 public:
     /**
-     * @brief Construct a new CLILoop object
+     * @brief Construct a CLILoop object
      * 
      * @param in the input stream
      * @param out the output stream

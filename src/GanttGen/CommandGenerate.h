@@ -1,12 +1,16 @@
 #pragma once
 #include "Command.h"
 
+/**
+ * @brief generate [<source>.xml] [<output>.html] [MIN_PEAK | MIN_TIME]
+ * 
+ */
 class CommandGenerate :
     public Command
 {
 public:
     /**
-     * @brief Construct a new CommandGenerate object
+     * @brief Construct a CommandGenerate object
      *
      */
     CommandGenerate();

@@ -3,12 +3,19 @@
 #include <stack>
 #include "XmlDocument.h"
 
+/**
+ * @brief An XmlDocument created from an istream
+ */
 class XmlParserDocument : public XmlDocument
 {
 private:
     std::istream& ss;
     std::stack<XmlElementNode*> stack;
 public:
+    /**
+     * @brief Construct an XmlDocument from an istream
+     * @param ss the istram to use
+     */
     XmlParserDocument(std::istream& ss);
 private:
     void parse();
