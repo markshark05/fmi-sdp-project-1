@@ -93,6 +93,13 @@ Project::RawProject Project::parseRawProject(const XmlDocument& document)
             task.max_start_day = std::stoi(max_start_day);
         }
 
+        if ((task.max_start_day != -1) &&
+            (task.min_start_day != -1) &&
+            (task.min_start_day > task.max_start_day))
+        {
+            throw std::runtime_error("project parser: min_start_day cannot be greater than max_start_day");
+        }
+
         std::string duration{ taskNode->getAttr("duration") };
         if (duration.empty())
         {

@@ -4,7 +4,7 @@
 
 /**
  * @brief help - prints this information
- * 
+ *
  */
 class CommandHelp :
     public Command
@@ -14,7 +14,7 @@ private:
 public:
     /**
      * @brief Construct a CommandHelp object
-     * 
+     *
      * @param commandLoop the loop containing the commands
      */
     CommandHelp(const ICommandsLoop& commandLoop);

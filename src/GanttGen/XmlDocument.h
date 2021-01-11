@@ -18,7 +18,7 @@ public:
      * @brief The root xml node. <?xml ?> if not overriden in a derived classs.
      */
     XmlElementNode* const rootNode;
-    
+
     /**
      * @brief Construct an XmlDocument object with the default rootNode
      */

@@ -30,17 +30,17 @@ void CommandGenerate::execute(std::istream& in, std::ostream& out, const std::ve
     {
         std::ifstream fi{ source };
         XmlParserDocument doc{ fi };
-        
+
         Project proj{ doc };
         std::vector<GanttTask> tasks = GanttCore::createTasks(proj, convert(option));
         GanttHtml htmlGenerator{ tasks };
-        
+
         std::ofstream f{ output, std::ios::out | std::ios::trunc };
         htmlGenerator.generate(f);
 
         out << "Output generated." << std::endl;
     }
-    catch(std::exception e)
+    catch (std::exception e)
     {
         out << "error: " << e.what() << std::endl;
     }

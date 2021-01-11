@@ -18,20 +18,20 @@ private:
 public:
     /**
      * @brief Construct an HtmlDocument object
-     * 
+     *
      */
     HtmlDocument();
 
     /**
      * @brief Get the Head element
-     * 
-     * @return XmlElementNode* 
+     *
+     * @return XmlElementNode*
      */
     XmlElementNode* getHead() const;
     /**
      * @brief Get the Body element
-     * 
-     * @return XmlElementNode* 
+     *
+     * @return XmlElementNode*
      */
     XmlElementNode* getBody() const;
 

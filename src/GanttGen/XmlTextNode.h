@@ -2,7 +2,7 @@
 #include "XmlNode.h"
 
 /**
- * @brief An XMLNode that contains just text 
+ * @brief An XMLNode that contains just text
  */
 class XmlTextNode : public XmlNode
 {

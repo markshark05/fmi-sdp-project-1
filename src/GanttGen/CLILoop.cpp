@@ -49,7 +49,7 @@ void CLILoop::loop()
         {
             line.erase(0, command->getName().length());
             std::vector<std::string> args = parseArgs(line);
-            
+
             if (!command->authorize())
             {
                 out << "You are not authorized to run this command." << std::endl;
@@ -96,10 +96,10 @@ Command* CLILoop::findMatchingCommand(const std::string& lineStr)
 std::vector<std::string> CLILoop::parseArgs(const std::string& lineStr)
 {
     std::vector<std::string> args;
-    
+
     std::string token;
     std::istringstream linestream{ lineStr };
-    while(linestream >> token)
+    while (linestream >> token)
     {
         args.push_back(token);
     }

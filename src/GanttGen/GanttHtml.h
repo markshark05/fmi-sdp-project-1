@@ -17,13 +17,13 @@ private:
 public:
     /**
      * @brief Construct a GanttHtml object
-     * 
+     *
      * @param tasks the list of source tasks
      */
     GanttHtml(const std::vector<GanttTask>& tasks);
     /**
      * @brief writes the html to the output stream
-     * 
+     *
      * @param out the output stream to write the html to
      */
     void generate(std::ostream& out);

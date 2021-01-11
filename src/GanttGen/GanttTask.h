@@ -13,7 +13,7 @@ private:
 public:
     /**
      * @brief Construct a GanttTask object
-     * 
+     *
      * @param name the name/identifer of the task
      * @param startOffset the resolved start time
      * @param length the duration of the task

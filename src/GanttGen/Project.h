@@ -4,7 +4,7 @@
 
 /**
  * @brief Represents a Project containing tasks
- * 
+ *
  */
 class Project
 {
@@ -33,7 +33,7 @@ private:
 public:
     /**
      * @brief Construct a Project object from the source XMLDocument
-     * 
+     *
      * @param document the source document
      */
     Project(const XmlDocument& document);

@@ -3,7 +3,7 @@
 
 /**
  * @brief generate [<source>.xml] [<output>.html] [MIN_PEAK | MIN_TIME]
- * 
+ *
  */
 class CommandGenerate :
     public Command

@@ -4,7 +4,7 @@
 
 /**
  * @brief exit - exists the program
- * 
+ *
  */
 class CommandExit :
     public Command
@@ -14,7 +14,7 @@ private:
 public:
     /**
      * @brief Construct a CommandExit object
-     * 
+     *
      * @param loop a reference to the loop to stop
      */
     CommandExit(IStoppableLoop& loop);

@@ -9,7 +9,7 @@ struct Task
 {
     /**
      * @brief Construct a Task object
-     * 
+     *
      */
     Task();
     std::string name;

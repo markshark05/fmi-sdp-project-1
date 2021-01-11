@@ -11,7 +11,7 @@ class XmlNode
 public:
     /**
      * @brief Construct an XmlNode object
-     * 
+     *
      */
     XmlNode() = default;
     XmlNode(const XmlNode&) = delete;
@@ -27,7 +27,7 @@ public:
      * @return std::vector<XmlNode*> the children of the xmlNode
      */
     virtual std::vector<XmlNode*> getChildren() const;
-    
+
     /**
      * @brief Get the tagName of the node
      * @return std::string the tagName

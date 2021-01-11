@@ -1,11 +1,100 @@
 #include "GanttCore.h"
 #include <functional>
 
+std::unordered_set<Task*> filter(std::unordered_set<Task*> tasks, std::function<bool(Task*)> pred)
+{
+    std::unordered_set<Task*> res;
+    for (Task* const& t : tasks)
+    {
+        if (pred(t))
+        {
+            res.insert(t);
+        }
+    }
+    return res;
+}
+
+GanttCore::TaskManager::TaskManager(const std::vector<Task*>& tasks) :
+    day(0)
+{
+    for (Task* const& t : tasks)
+    {
+        pending.insert(t);
+    }
+}
+
+void GanttCore::TaskManager::moveDay()
+{
+    for (auto it = running.begin(); it != running.end();)
+    {
+        if (day >= task_start_map.at(*it) + (*it)->duration - 1)
+        {
+            completed.insert(*it);
+            it = running.erase(it);
+        }
+        else it++;
+    }
+
+    day++;
+}
+
+void GanttCore::TaskManager::start(Task* task)
+{
+    pending.erase(task);
+    running.insert(task);
+    task_start_map.insert_or_assign(task, day);
+}
+
+std::unordered_set<Task*> GanttCore::TaskManager::getAvailable()
+{
+    std::unordered_set<Task*> filtered;
+
+    // check if any task has passed it's max start day
+    if (std::any_of(pending.begin(), pending.end(),
+        [&](Task* t) { return t->max_start_day > day; }))
+    {
+        throw std::runtime_error("GanttCore: impossible max_start_day detected on day:" + day);
+    }
+
+    // filter by previous_tasks
+    filtered = filter(pending,
+        [&](Task* t)
+        {
+            return
+                std::all_of(t->previous_tasks.begin(), t->previous_tasks.end(),
+                    [&](Task* pt) { return completed.count(pt) > 0; });
+        });
+
+    // check for cycles
+    if (filtered.empty() && running.empty())
+        throw std::runtime_error("GanttCore: Dependency cycle detected on day:" + day);
+
+    // filter by min/max_start_day
+    filtered = filter(filtered,
+        [&](Task* t)
+        {
+            return
+                (t->min_start_day == -1 || t->min_start_day <= day) &&
+                (t->max_start_day == -1 || t->max_start_day >= day);
+        });
+
+    // filter by dependent_tasks
+    filtered = filter(filtered,
+        [&](Task* t)
+        {
+            return
+                std::none_of(pending.begin(), pending.end(),
+                    [&](Task* pt) { return pt->dependent_tasks.count(t); });
+        });
+
+    return filtered;
+}
+
 std::vector<GanttTask> GanttCore::createTasks(Project& proj, OPT opt)
 {
     std::vector<GanttTask> tasks;
     std::unordered_map<Task*, int> task_start_map = process(proj, opt);
-    for (Task*const& task : proj.tasks)
+    for (Task* const& task : proj.tasks)
     {
         GanttTask t{ task->name, task_start_map[task], task->duration };
         tasks.push_back(t);
@@ -20,7 +109,7 @@ float GanttCore::calc_resource(const std::unordered_set<Task*>& tasks)
             [](float a, Task* b) { return a + b->resources; });
 }
 
-Task* GanttCore::take_min_res(const std::unordered_set<Task*>& tasks)
+Task* GanttCore::take_best(const std::unordered_set<Task*>& tasks)
 {
     return
         *std::min_element(tasks.begin(), tasks.end(),
@@ -48,106 +137,45 @@ void GanttCore::validate_proj_resource(Project& proj)
     }
 }
 
-std::unordered_set<Task*> filter(std::unordered_set<Task*> tasks, std::function<bool(Task*)> pred)
-{
-    std::unordered_set<Task*> res;
-    for (Task* const& t : tasks)
-    {
-        if (pred(t))
-        {
-            res.insert(t);
-        }
-    }
-    return res;
-}
-
 std::unordered_map<Task*, int> GanttCore::process(Project& proj, OPT opt)
 {
-    std::unordered_set<Task*> completed;
-    std::unordered_set<Task*> running;
-    
-    std::unordered_set<Task*> pending;
-    for (Task* const& t : proj.tasks)
-    {
-        pending.insert(t);
-    }
-    
     validate_proj_resource(proj);
 
-    std::unordered_map<Task*, int> task_start_map;
-    int day = 0;
-    while (!pending.empty())
+    TaskManager manager{ proj.tasks };
+
+    while (!manager.pending.empty())
     {
-        std::unordered_set<Task*> prev_satisfied = filter(pending,
-            [&](Task* t)
-            {
-                return
-                    std::all_of(t->previous_tasks.begin(), t->previous_tasks.end(),
-                        [&](Task* pt) { return completed.count(pt) > 0; });
-            });
+        std::unordered_set<Task*> availableTasks = manager.getAvailable();
 
-        if (prev_satisfied.empty() && running.empty())
-            throw std::runtime_error("GanttCore: No task can be started due to dependency cycle, day:" + day);
-
-        std::unordered_set<Task*> time_satisfied = filter(prev_satisfied,
-            [&](Task* t)
-            {
-                return
-                    (t->min_start_day == -1 || t->min_start_day <= day) &&
-                    (t->max_start_day == -1 || t->max_start_day >= day);
-            });
-
-        if (!time_satisfied.empty())
+        if (!availableTasks.empty())
         {
-            std::unordered_set<Task*> dep_satisfied = filter(time_satisfied,
-                [&](Task* t)
-                {
-                    return
-                        std::none_of(pending.begin(), pending.end(),
-                            [&](Task* pt) { return pt->dependent_tasks.count(t); });
-                });
-
             if (opt == OPT::MIN_PEAK_RES)
             {
-                if (running.empty() && !dep_satisfied.empty())
+                if (manager.running.empty() && !availableTasks.empty())
                 {
-                    Task* task = take_min_res(dep_satisfied);
-                    pending.erase(task);
-                    running.insert(task);
-                    task_start_map.insert_or_assign(task, day);
+                    Task* task = take_best(availableTasks);
+                    manager.start(task);
                 }
             }
             else if (opt == OPT::MIN_TIME)
             {
                 while (
-                    !dep_satisfied.empty() &&
-                    calc_resource(running) +
-                    take_min_res(dep_satisfied)->resources <=
-                    proj.max_peak_resource
-                    )
+                    !availableTasks.empty() &&
+                    (calc_resource(manager.running) +
+                        take_best(availableTasks)->resources <=
+                        proj.max_peak_resource))
                 {
-                    Task* task = take_min_res(dep_satisfied);
-                    pending.erase(task);
-                    dep_satisfied.erase(task);
-                    running.insert(task);
-                    task_start_map.insert_or_assign(task, day);
+                    Task* task = take_best(availableTasks);
+                    manager.start(task);
+
+                    availableTasks = manager.getAvailable();
                 }
             }
             else throw std::runtime_error("GanttCore: Unsupported otion");
         }
 
-        for (auto it = running.begin(); it != running.end();)
-        {
-            if (day >= task_start_map.at(*it) + (*it)->duration - 1)
-            {
-                completed.insert(*it);
-                it = running.erase(it);
-            }
-            else it++;
-        }
-
-        day++;
+        manager.moveDay();
     }
 
-    return task_start_map;
+    return manager.task_start_map;
 }
