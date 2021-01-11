@@ -51,7 +51,7 @@ std::unordered_set<Task*> GanttCore::TaskManager::getAvailable()
 
     // check if any task has passed it's max start day
     if (std::any_of(pending.begin(), pending.end(),
-        [&](Task* t) { return t->max_start_day > day; }))
+        [&](Task* t) { return t->max_start_day < day; }))
     {
         throw std::runtime_error("GanttCore: impossible max_start_day detected on day:" + day);
     }
@@ -74,8 +74,8 @@ std::unordered_set<Task*> GanttCore::TaskManager::getAvailable()
         [&](Task* t)
         {
             return
-                (t->min_start_day == -1 || t->min_start_day <= day) &&
-                (t->max_start_day == -1 || t->max_start_day >= day);
+                t->min_start_day <= day &&
+                t->max_start_day >= day;
         });
 
     // filter by dependent_tasks
@@ -115,7 +115,7 @@ Task* GanttCore::take_best(const std::unordered_set<Task*>& tasks)
         *std::min_element(tasks.begin(), tasks.end(),
             [&](Task* a, Task* b)
             {
-                return a->resources < b->resources;
+                return (a->max_start_day < b->max_start_day);
             });
 }
 
@@ -151,7 +151,10 @@ std::unordered_map<Task*, int> GanttCore::process(Project& proj, OPT opt)
         {
             if (opt == OPT::MIN_PEAK_RES)
             {
-                if (manager.running.empty() && !availableTasks.empty())
+                if (!availableTasks.empty() &&
+                    (manager.running.empty() ||
+                        std::any_of(availableTasks.begin(), availableTasks.end(),
+                            [&](Task* t) { return t->max_start_day == manager.day; })))
                 {
                     Task* task = take_best(availableTasks);
                     manager.start(task);
