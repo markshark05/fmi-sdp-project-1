@@ -1,0 +1,6 @@
+<project max-resource="99" max-peak-resource="99">
+    <task name="task1" min-start-day="" max-start-day="" duration="2" resources="1" />
+    <task name="task2" min-start-day="" max-start-day="" duration="2" resources="1" />
+    <task name="task3" min-start-day="" max-start-day="" duration="2" resources="1" />
+    <task name="task4" min-start-day="" max-start-day="" duration="2" resources="1" />
+</project>

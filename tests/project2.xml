@@ -1,0 +1,12 @@
+<project max-resource="100" max-peak-resource="5">
+    <task name="task1" min-start-day="" max-start-day="" duration="2" resources="1" />
+    <task name="task2" min-start-day="" max-start-day="" duration="3" resources="1" />
+    <task name="task3" min-start-day="" max-start-day="" duration="3" resources="1">
+        <sub-task type="previous" name="task2" />
+    </task>
+    <task name="task4" min-start-day="" max-start-day="" duration="2" resources="1">
+        <sub-task type="previous" name="task1" />
+        <sub-task type="dependent" name="task2" />
+    </task>
+    <task name="task5" min-start-day="1" max-start-day="4" duration="5" resources="1" />
+</project>
